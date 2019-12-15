@@ -365,7 +365,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\USER;..\CORE;..\STM32F10x_FWLib\inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER\CSP;..\USER\ARG</IncludePath>
+              <IncludePath>..\USER;..\CORE;..\STM32F10x_FWLib\inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER\CSP;..\USER\ARG;..\USER\PERIPH</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -437,11 +437,6 @@
               <FileName>sys.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\SYSTEM\sys\sys.c</FilePath>
-            </File>
-            <File>
-              <FileName>usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\SYSTEM\usart\usart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -603,6 +598,11 @@
               <FileType>1</FileType>
               <FilePath>.\CSP\csp_uart.c</FilePath>
             </File>
+            <File>
+              <FileName>csp_wtd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\CSP\csp_wtd.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -612,6 +612,31 @@
               <FileName>arg_debug_pro.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\ARG\arg_debug_pro.c</FilePath>
+            </File>
+            <File>
+              <FileName>arg_version.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ARG\arg_version.c</FilePath>
+            </File>
+            <File>
+              <FileName>app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ARG\app.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>PERIPH</GroupName>
+          <Files>
+            <File>
+              <FileName>periph_motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\PERIPH\periph_motor.c</FilePath>
+            </File>
+            <File>
+              <FileName>periph_key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\PERIPH\periph_key.c</FilePath>
             </File>
           </Files>
         </Group>

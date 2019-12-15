@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include "app.h"
 
 void arg_debug_pro_init(void){
     uint8_t welcom_string[200];
@@ -33,6 +34,7 @@ static void help(void){
     debug_sender_str(" 2  make_pos_pluse pulse\r\n");debug_send_nop();
     debug_sender_str(" 3  set_pos_motor dir pulse\r\n");debug_send_nop();
     debug_sender_str(" 4  get_sw \r\n");debug_send_nop();
+    debug_sender_str(" 5  get_app_status \r\n");debug_send_nop();
 }
 
 static void make_zhuazi_pluse(void){
@@ -194,13 +196,26 @@ static void set_pos_motor(void){
     
     debug_sender_str(send_buf);
 }
+
+static void get_app_status_(void){
+    switch(get_app_status()){
+        case UNINITIALIZED: debug_sender_str("now status : UNINITIALIZED\r\n");break;
+        case READY_STATUS: debug_sender_str("now status : READY_STATUS\r\n");break;
+        case CLAMPING_STATUS: debug_sender_str("now status : CLAMPING_STATUS\r\n");break;
+        case WAIT_LIFT_DOWN_DELAY_STATUS: debug_sender_str("now status : WAIT_LIFT_DOWN_DELAY_STATUS\r\n");break;
+        case POS_MOTOR_RUN_STATUS: debug_sender_str("now status : POS_MOTOR_RUN_STATUS\r\n");break;
+        case OPEN_STATUS: debug_sender_str("now status : OPEN_STATUS\r\n");break;
+        case POS_MOTOR_RETURN_STATUS: debug_sender_str("now status : POS_MOTOR_RETURN_STATUS\r\n");break;        
+    }
+}
 debug_func_list_t debug_func_list[] = {
 
     {help,"help"},{help,"?"},{help,"HELP"},
     {make_zhuazi_pluse,"make_zhuazi_pluse"},{make_zhuazi_pluse,"1"},
     {make_pos_pluse,"make_pos_pluse"},{make_pos_pluse,"2"},
     {set_pos_motor,"set_pos_motor"},{set_pos_motor,"3"},
-    {get_sw,"get_sw"},{get_sw,"4"},    
+    {get_sw,"get_sw"},{get_sw,"4"},  
+    {get_app_status_,"get_app_status"},{get_app_status_,"5"}, 
 };
 
 

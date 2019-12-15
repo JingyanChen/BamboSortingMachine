@@ -12,6 +12,19 @@ bool software_pluse_bool=false;
 uint32_t pluse_make_tim_25us = 0;
 uint32_t now_pluse_make_tim = 0;
 
+void null_func(void){
+
+}
+
+motor_run_done_func_t motor_run_done_func[2]={
+    null_func,
+    null_func,
+};
+
+void set_motor_rundone_func(uint8_t id , motor_run_done_func_t func){
+    motor_run_done_func[id % 2] = func;
+}
+
 void csp_pwm_init(void){
 
     GPIO_InitTypeDef GPIO_InitStructure;
@@ -76,8 +89,7 @@ void set_pluse(uint8_t id , uint32_t pluse){
         pluse_maker_status[id] = pluse_make_busy ;
         software_pluse_bool = false;
     }else{
-        close_pos_motor_pwm();
-
+			
         //16KHZ的方波计算生成pluse个方波需要多少时间 单位25us
 
         make_tim = (float)pluse / 16000.0; //算出来make_tim是需要的时间 单位是ms
@@ -90,6 +102,22 @@ void set_pluse(uint8_t id , uint32_t pluse){
     }
 }
 
+void stop_pluse(uint8_t id ){
+
+    if(id == 0){
+        pluse_need_make = 0;
+        pluse_made = 0;
+        pluse_maker_status[id] = pluse_make_done ;
+        software_pluse_bool = false;
+    }else{
+        close_pos_motor_pwm();
+        //硬件输出固定脉冲数结束
+        pluse_maker_status[id] = pluse_make_done;
+        now_pluse_make_tim = 0;
+        pluse_make_tim_25us = 0;       
+    }    
+}
+
 pluse_maker_status_t get_pluse_maker(uint8_t id){
     return pluse_maker_status[id % 2];
 }
@@ -98,10 +126,10 @@ pluse_maker_status_t get_pluse_maker(uint8_t id){
 void csp_pwm_handle(void){
     uint8_t i=0;
 
-    if(_PLUSE_MAKER_FLAG == false)
-        return ;
+    //if(_PLUSE_MAKER_FLAG == false)
+        //return ;
 
-    _PLUSE_MAKER_FLAG = false;
+    //_PLUSE_MAKER_FLAG = false;
 
     for(i=0;i<2;i++){
         if(pluse_maker_status[i] == pluse_make_busy){
@@ -116,6 +144,7 @@ void csp_pwm_handle(void){
                     if(pluse_made > pluse_need_make - 1){
                         //软件脉冲输出结束
                         pluse_maker_status[i] = pluse_make_done;
+                        motor_run_done_func[0]();
                     }                 
                 }
             }else{
@@ -127,6 +156,7 @@ void csp_pwm_handle(void){
                     pluse_maker_status[i] = pluse_make_done;
                     now_pluse_make_tim = 0;
                     pluse_make_tim_25us = 0;
+                    motor_run_done_func[1]();
                 }
             }
         }

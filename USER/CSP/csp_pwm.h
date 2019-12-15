@@ -27,8 +27,14 @@ typedef enum{
 
 void set_pluse(uint8_t id , uint32_t pluse);
 pluse_maker_status_t get_pluse_maker(uint8_t id);
+void stop_pluse(uint8_t id );
 
 void open_pos_motor_pwm(void);
 void close_pos_motor_pwm(void);
+
+
+typedef void (*motor_run_done_func_t) (void);
+void set_motor_rundone_func(uint8_t id , motor_run_done_func_t func);
+
 
 #endif

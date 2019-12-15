@@ -1,6 +1,6 @@
 #include "sys.h"
 #include "csp_timer.h"
-
+#include "csp_pwm.h"
 bamboSortingMachine_t  bamboSortingMachine;
 
 
@@ -34,6 +34,7 @@ void TIM5_IRQHandler(void)
     {
         //25us pass
         _25US_PASS_FLAG = true;
+        csp_pwm_handle();
         TIM_ClearITPendingBit(TIM5, TIM_IT_Update);
     }
 }
@@ -52,6 +53,7 @@ static void csp_25_us_handle(void){
     _1ms_tick++;
 
     _PLUSE_MAKER_FLAG = true;
+    _APP_UPDATE_FLAG = true;
 
     if(_1ms_tick > 400){
     // 1 ms code

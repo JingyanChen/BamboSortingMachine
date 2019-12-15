@@ -36,6 +36,8 @@ extern bamboSortingMachine_t  bamboSortingMachine;
 #define _UART_LCD_10MS_FLAG bamboSortingMachine.timer_flag.se4
 #define _PLUSE_MAKER_FLAG bamboSortingMachine.timer_flag.se5
 #define _KEY_EVENT_CHECK_FLAG bamboSortingMachine.timer_flag.se6
+#define _APP_UPDATE_FLAG bamboSortingMachine.timer_flag.se7
+
 void csp_timer_init(void);
 void csp_timer_handle(void);
 
