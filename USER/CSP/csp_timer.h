@@ -31,7 +31,11 @@ extern bamboSortingMachine_t  bamboSortingMachine;
 
 #define _25US_PASS_FLAG  bamboSortingMachine.timer_flag.se0
 #define _TIMER_1_MS_PASS bamboSortingMachine.timer_flag.se1
-
+#define _UPLOAD_TEMP_GUI_FLAG bamboSortingMachine.timer_flag.se2
+#define _UART_PT100_10MS_FLAG bamboSortingMachine.timer_flag.se3
+#define _UART_LCD_10MS_FLAG bamboSortingMachine.timer_flag.se4
+#define _PLUSE_MAKER_FLAG bamboSortingMachine.timer_flag.se5
+#define _KEY_EVENT_CHECK_FLAG bamboSortingMachine.timer_flag.se6
 void csp_timer_init(void);
 void csp_timer_handle(void);
 

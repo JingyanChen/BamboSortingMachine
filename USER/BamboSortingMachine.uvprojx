@@ -365,7 +365,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\USER;..\CORE;..\STM32F10x_FWLib\inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER\CSP</IncludePath>
+              <IncludePath>..\USER;..\CORE;..\STM32F10x_FWLib\inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER\CSP;..\USER\ARG</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -587,6 +587,31 @@
               <FileName>csp_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\CSP\csp_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>csp_timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\CSP\csp_timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>csp_pwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\CSP\csp_pwm.c</FilePath>
+            </File>
+            <File>
+              <FileName>csp_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\CSP\csp_uart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ARG</GroupName>
+          <Files>
+            <File>
+              <FileName>arg_debug_pro.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ARG\arg_debug_pro.c</FilePath>
             </File>
           </Files>
         </Group>

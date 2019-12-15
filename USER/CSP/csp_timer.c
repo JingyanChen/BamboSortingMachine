@@ -51,6 +51,8 @@ static void csp_25_us_handle(void){
 
     _1ms_tick++;
 
+    _PLUSE_MAKER_FLAG = true;
+
     if(_1ms_tick > 400){
     // 1 ms code
     _1ms_tick = 0;
@@ -67,6 +69,10 @@ static void csp_10_ms_handle(void){
     _10ms_tick = 0;
 
     // 10 ms code
+    _UPLOAD_TEMP_GUI_FLAG = true;
+    _UART_LCD_10MS_FLAG = true;
+    _UART_PT100_10MS_FLAG = true;
+    _KEY_EVENT_CHECK_FLAG = true;
     //
 
     _100ms_tick ++;
@@ -79,6 +85,7 @@ static void csp_100_ms_handle(void){
     _100ms_tick = 0;
 
     // 100 ms code
+    
     //
 
     _1000ms_tick ++;

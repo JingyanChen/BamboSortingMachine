@@ -41,13 +41,16 @@ void csp_gpio_init(void){
 
     //input set
 
-    for (i = 0; i < 2; i++)
-    {   
-        GPIO_InitStructure.GPIO_Pin = INPUT_PIN_LIST[i];
-        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-        GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-        GPIO_Init(INPUT_PORT_LIST[i], &GPIO_InitStructure);
-    }
+
+    GPIO_InitStructure.GPIO_Pin = INPUT_PIN_LIST[1];
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(INPUT_PORT_LIST[1], &GPIO_InitStructure);
+
+    GPIO_InitStructure.GPIO_Pin = INPUT_PIN_LIST[0];
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(INPUT_PORT_LIST[0], &GPIO_InitStructure);
 }
 
 
@@ -64,4 +67,12 @@ void set_software_pwm_v(bool sw){
     }else{
         GPIO_ResetBits(SOFTWARE_PWM_OUTPUT_PORT , SOFTWARE_PWM_OUTPUT_PIN);
     }   
+}
+
+void set_pos_motor_dir(bool sw){
+    if(sw){
+        GPIO_SetBits(POS_MOTOR_DIR_PORT , POS_MOTOR_DIR_PIN);
+    }else{
+        GPIO_ResetBits(POS_MOTOR_DIR_PORT , POS_MOTOR_DIR_PIN);
+    }       
 }
