@@ -132,7 +132,7 @@ void csp_pwm_handle(void){
     //_PLUSE_MAKER_FLAG = false;
 
     for(i=0;i<2;i++){
-        if(pluse_maker_status[i] == pluse_make_busy){
+        if(pluse_maker_status[i] == pluse_make_busy){                                            
             if(i == 0){
                 if(software_pluse_bool==false){
                     set_software_pwm_v(true);

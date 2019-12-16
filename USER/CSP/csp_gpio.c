@@ -4,10 +4,12 @@
 
 GPIO_TypeDef *OUTPUT_PORT_LIST[] = {
     SOFTWARE_PWM_OUTPUT_PORT,
+		POS_MOTOR_DIR_PORT,
 };
 
 uint16_t OUTPUT_PIN_LIST[] = {
     SOFTWARE_PWM_OUTPUT_PIN,
+		POS_MOTOR_DIR_PIN,
 };
 
 GPIO_TypeDef *INPUT_PORT_LIST[] = {
@@ -29,7 +31,7 @@ void csp_gpio_init(void){
 
     //output set
 
-    for (i = 0; i < 1; i++)
+    for (i = 0; i < 2; i++)
     {
 
         GPIO_InitStructure.GPIO_Pin = OUTPUT_PIN_LIST[i];

@@ -7,7 +7,7 @@
 
 
 #define MAIN_VERSION    2
-#define SECOND_VERSION  0
+#define SECOND_VERSION  2
 #define IS_RELEASE      0
 
 
