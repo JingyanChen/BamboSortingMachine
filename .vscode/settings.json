@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "periph_motor.h": "c",
-        "csp_pwm.h": "c"
+        "csp_pwm.h": "c",
+        "csp_wtd.h": "c"
     }
 }

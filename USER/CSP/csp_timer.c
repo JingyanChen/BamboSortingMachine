@@ -1,6 +1,8 @@
 #include "sys.h"
 #include "csp_timer.h"
 #include "csp_pwm.h"
+#include "app.h"
+
 bamboSortingMachine_t  bamboSortingMachine;
 
 
@@ -11,7 +13,7 @@ void csp_timer_init(void)
 
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM5, ENABLE);
 
-    TIM_TimeBaseStructure.TIM_Period = 1799; //FRE = 72000000/1800 = 40khz
+    TIM_TimeBaseStructure.TIM_Period = 3599; //FRE = 72000000/1800 = 40khz   1799
     TIM_TimeBaseStructure.TIM_Prescaler = 0;
     TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
     TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;

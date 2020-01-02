@@ -4,116 +4,70 @@
 #include "csp_gpio.h"
 #include "periph_motor.h"
 #include "stdlib.h"
+#include "csp_wtd.h"
+#include "delay.h"
 
-static app_status_t app_status;
-static uint32_t delay_tick=0;//延时变量
-static uint8_t ran_data=0; //获得的随机竹条位置，后期改为通讯值
+test_AB_status_t test_AB_status;
 
 
-pos_motor_data_t pos_motor_data[8]={
-    {0,1600000},
-    {0,3200000},
-    {0,4800000},
-    {0,7200000},
-    {1,1600000},
-    {1,3200000},
-    {1,4800000},
-    {1,7200000},
-};
 
-void set_app_status(app_status_t app_status_){
-    app_status = app_status_;
-}
 
-app_status_t get_app_status(void){
-    return app_status;
-}
-
-void arg_app_init(void){
-    set_app_status(UNINITIALIZED);//初始状态为未初始化状态
-    //尝试初始化
+void not_B_process_done(void){
+    test_AB_status = NOT_B_POS;
+    delay_ms(A_B_DEALY_TIM_MS);csp_wtd_handle();
     set_pluse(0,0xffffffff);
 }
 
-static void initial_done_func(void){
-    set_app_status(READY_STATUS);
-}
-static void null_func(void){
-}
-static void ALL_DONE(void){
-    set_app_status(READY_STATUS);
-    stop_pluse(1);stop_pluse(0);
-	  set_motor_rundone_func(0,null_func);
-	  set_motor_rundone_func(1,null_func);
-}
-static void OPEN_STATUS_DONE(void){
-    
-    set_pluse(0,200);//继续旋转90度
-
-    //回归电机
-    if(pos_motor_data[ran_data%8].dir == 1){
-        set_motor(0,pos_motor_data[ran_data%8].pluse);
+void EXTI1_IRQHandler(void)
+{
+    if (EXTI_GetITStatus(EXTI_Line1) == SET)
+    {
+        if(test_AB_status == NOT_B_POS){
+            //if(get_proximity_switch_v(1)){
+                stop_pluse(0);
+				test_AB_status = B_POS;
+				delay_ms(A_B_DEALY_TIM_MS);csp_wtd_handle();
+				set_pluse(0,400);//旋转180度进入A
+				set_motor_rundone_func(0,not_B_process_done);
+            }
+        //}
+        EXTI_ClearITPendingBit(EXTI_Line1);
     }
-    else{
-        set_motor(1,pos_motor_data[ran_data%8].pluse);
-    }
-		set_motor_rundone_func(0,null_func);
-    set_motor_rundone_func(1,ALL_DONE);
-
-}
-static void POS_MOTOR_RUN_STATUS_DONE(void){
-    set_app_status(OPEN_STATUS);
-    set_pluse(0,400);//继续旋转180度
-    set_motor_rundone_func(0,OPEN_STATUS_DONE);
 }
 
 
+void arg_app_init(void){
+
+    GPIO_InitTypeDef GPIO_InitStructure;
+    NVIC_InitTypeDef NVIC_InitStructure;
+    EXTI_InitTypeDef EXTI_InitStructure;
+
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOE | RCC_APB2Periph_AFIO, ENABLE);
+
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+    GPIO_Init(GPIOE, &GPIO_InitStructure);
+
+    GPIO_EXTILineConfig(GPIO_PortSourceGPIOE, GPIO_PinSource1);
+
+    EXTI_InitStructure.EXTI_Line = EXTI_Line1;
+    EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+    EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;
+    EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+    EXTI_Init(&EXTI_InitStructure);
+
+    NVIC_InitStructure.NVIC_IRQChannel = EXTI1_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&NVIC_InitStructure);
 
 
+    test_AB_status = NOT_B_POS;
+
+    set_pluse(0,0xffffffff);
+}
 
 void arg_app_handle(void){
-
-    if(_APP_UPDATE_FLAG == false)
-        return ;
-    _APP_UPDATE_FLAG = false;
-
-    switch(app_status){
-        case UNINITIALIZED: 
-            if(get_proximity_switch_v(1)){
-                //set_app_status(READY_STATUS);
-                //stop_pluse(0);
-                //正转270度
-                set_pluse(0,600);//正转270度
-                set_motor_rundone_func(0,initial_done_func);
-            }
-            break;
-        case READY_STATUS: break;
-        case CLAMPING_STATUS: break;
-        case WAIT_LIFT_DOWN_DELAY_STATUS: 
-            //为快速部署，先给定一个固定的代码修改的常量作为延时时间
-            delay_tick++;
-            if(delay_tick > 80000) {
-                //等待2S
-                delay_tick = 0;
-                set_app_status (POS_MOTOR_RUN_STATUS);
-            }
-
-             break;
-        case POS_MOTOR_RUN_STATUS: 
-
-            //随机从八组数据中随机获得一个数，作为运动电机运动依据
-						
-            ran_data = rand() % 8;
-            set_motor(pos_motor_data[ran_data%8].dir,pos_motor_data[ran_data%8].pluse);
-
-            //注册运动结束函数
-            set_motor_rundone_func(1,POS_MOTOR_RUN_STATUS_DONE);
-						set_app_status(NOP__);
-            break;
-        case OPEN_STATUS: break;
-        case POS_MOTOR_RETURN_STATUS: break;
-				
-				default:break;
-    }
 
 }

@@ -5,19 +5,10 @@
 #include "app.h"
 #include "csp_pwm.h"
 
-static void CLAMPING_STATUS_DONE(void){
-    set_app_status(WAIT_LIFT_DOWN_DELAY_STATUS);
-    
-}
 
 static void default_key_event_0(void){
-    debug_sender_str((uint8_t*)"key 0 event happend!\r\n");
-    if(get_app_status() == READY_STATUS){
-        set_app_status(CLAMPING_STATUS);
-        set_pluse(0,200);//正转90度
-        set_motor_rundone_func(0,CLAMPING_STATUS_DONE);
-    }
-    }
+
+}
 
 static key_event_t key_event_func[KEY_NUM]={
     default_key_event_0,

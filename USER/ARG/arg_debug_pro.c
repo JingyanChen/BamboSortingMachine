@@ -197,17 +197,6 @@ static void set_pos_motor(void){
     debug_sender_str(send_buf);
 }
 
-static void get_app_status_(void){
-    switch(get_app_status()){
-        case UNINITIALIZED: debug_sender_str("now status : UNINITIALIZED\r\n");break;
-        case READY_STATUS: debug_sender_str("now status : READY_STATUS\r\n");break;
-        case CLAMPING_STATUS: debug_sender_str("now status : CLAMPING_STATUS\r\n");break;
-        case WAIT_LIFT_DOWN_DELAY_STATUS: debug_sender_str("now status : WAIT_LIFT_DOWN_DELAY_STATUS\r\n");break;
-        case POS_MOTOR_RUN_STATUS: debug_sender_str("now status : POS_MOTOR_RUN_STATUS\r\n");break;
-        case OPEN_STATUS: debug_sender_str("now status : OPEN_STATUS\r\n");break;
-        case POS_MOTOR_RETURN_STATUS: debug_sender_str("now status : POS_MOTOR_RETURN_STATUS\r\n");break;        
-    }
-}
 debug_func_list_t debug_func_list[] = {
 
     {help,"help"},{help,"?"},{help,"HELP"},
@@ -215,7 +204,6 @@ debug_func_list_t debug_func_list[] = {
     {make_pos_pluse,"make_pos_pluse"},{make_pos_pluse,"2"},
     {set_pos_motor,"set_pos_motor"},{set_pos_motor,"3"},
     {get_sw,"get_sw"},{get_sw,"4"},  
-    {get_app_status_,"get_app_status"},{get_app_status_,"5"}, 
 };
 
 

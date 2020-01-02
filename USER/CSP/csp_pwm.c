@@ -2,6 +2,7 @@
 #include "csp_timer.h"
 #include "csp_gpio.h"
 #include "sys.h"
+#include "app.h"
 
 pluse_maker_status_t pluse_maker_status[2];
 
