@@ -203,7 +203,10 @@ debug_func_list_t debug_func_list[] = {
     {make_zhuazi_pluse,"make_zhuazi_pluse"},{make_zhuazi_pluse,"1"},
     {make_pos_pluse,"make_pos_pluse"},{make_pos_pluse,"2"},
     {set_pos_motor,"set_pos_motor"},{set_pos_motor,"3"},
-    {get_sw,"get_sw"},{get_sw,"4"},  
+    {get_sw,"get_sw"},{get_sw,"4"}, 
+    {stop_at_a,"stop_at_a"},{stop_at_a,"5"},
+    {stop_at_b,"stop_at_b"},{stop_at_b,"6"},
+    {go_on,"go_on"}, {go_on,"7"}, 
 };
 
 

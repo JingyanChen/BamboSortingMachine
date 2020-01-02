@@ -9,13 +9,29 @@
 
 test_AB_status_t test_AB_status;
 
+static bool stop_at_a_bool =false;
+static bool stop_at_b_bool =false;
 
+void stop_at_a(void){
+    stop_at_a_bool = true;
+}
 
+void stop_at_b(void){
+    stop_at_b_bool = true;
+}
+
+void go_on(void){
+  stop_at_a_bool =false;
+  stop_at_b_bool =false;
+  set_pluse(0,0xffffffff);
+  test_AB_status = NOT_B_POS;
+}
 
 void not_B_process_done(void){
     test_AB_status = NOT_B_POS;
     delay_ms(A_B_DEALY_TIM_MS);csp_wtd_handle();
-    set_pluse(0,0xffffffff);
+    if(stop_at_b_bool == false)
+        set_pluse(0,0xffffffff);
 }
 
 void EXTI1_IRQHandler(void)
@@ -27,8 +43,10 @@ void EXTI1_IRQHandler(void)
                 stop_pluse(0);
 				test_AB_status = B_POS;
 				delay_ms(A_B_DEALY_TIM_MS);csp_wtd_handle();
+                if(stop_at_a_bool == false){
 				set_pluse(0,400);//旋转180度进入A
 				set_motor_rundone_func(0,not_B_process_done);
+                }
             }
         //}
         EXTI_ClearITPendingBit(EXTI_Line1);
@@ -69,5 +87,4 @@ void arg_app_init(void){
 }
 
 void arg_app_handle(void){
-
 }

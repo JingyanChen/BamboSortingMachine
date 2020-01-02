@@ -49,4 +49,8 @@ typedef enum{
 void arg_app_init(void);
 void arg_app_handle(void);
 
+void stop_at_a(void);
+void stop_at_b(void);
+void go_on(void);
+
 #endif
