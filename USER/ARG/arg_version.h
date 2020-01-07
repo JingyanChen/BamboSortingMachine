@@ -126,6 +126,8 @@
  * 
  * 修修改了GPIO定义以适应最新的电路板
  * 
+ * branch test
+ * 
  */
 
 void get_version_str(uint8_t * str,uint16_t len);
