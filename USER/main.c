@@ -34,6 +34,8 @@ int main(void){
 		arg_debug_pro_handle();
 
 		arg_app_handle();
+
+		random_handle();
 	}
 	
 }

@@ -77,6 +77,7 @@ static void csp_10_ms_handle(void){
     _UART_LCD_10MS_FLAG = true;
     _UART_PT100_10MS_FLAG = true;
     _KEY_EVENT_CHECK_FLAG = true;
+    _RANDOM_SEED_UPDATE_FLAG = true;
     //
 
     _100ms_tick ++;

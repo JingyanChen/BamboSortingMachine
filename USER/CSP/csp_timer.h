@@ -25,6 +25,7 @@ uint8_t se7 :1;
 
 typedef struct {
 SE timer_flag;
+SE timer_flag2;
 }bamboSortingMachine_t;
 
 extern bamboSortingMachine_t  bamboSortingMachine;
@@ -38,6 +39,7 @@ extern bamboSortingMachine_t  bamboSortingMachine;
 #define _KEY_EVENT_CHECK_FLAG bamboSortingMachine.timer_flag.se6
 #define _APP_UPDATE_FLAG bamboSortingMachine.timer_flag.se7
 
+#define _RANDOM_SEED_UPDATE_FLAG bamboSortingMachine.timer_flag2.se0
 void csp_timer_init(void);
 void csp_timer_handle(void);
 
